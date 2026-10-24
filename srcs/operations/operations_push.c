@@ -55,9 +55,11 @@ int	pa(t_stack *a, t_stack *b, t_ops_count *ops)
 {
 	if (push(b, a))
 	{
-		write(1, "pa\n", 3);
 		if (ops)
+		{
+			write(1, "pa\n", 3);
 			ops->pa++;
+		}
 		return (1);
 	}
 	return (0);
@@ -67,9 +69,11 @@ int	pb(t_stack *a, t_stack *b, t_ops_count *ops)
 {
 	if (push(a, b))
 	{
-		write(1, "pb\n", 3);
 		if (ops)
+		{
+			write(1, "pb\n", 3);
 			ops->pb++;
+		}
 		return (1);
 	}
 	return (0);

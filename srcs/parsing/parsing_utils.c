@@ -33,6 +33,8 @@ int	parse_string_arg(t_stack *stack, char *arg)
 	tokens = ft_split(arg, ' ');
 	if (!tokens)
 		return (0);
+	if (!tokens[0])
+		return (free_tokens(tokens), 0);
 	i = 0;
 	while (tokens[i])
 	{

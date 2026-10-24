@@ -32,9 +32,11 @@ int	rra(t_stack *a, t_ops_count *ops)
 {
 	if (reverse_rotate(a))
 	{
-		write(1, "rra\n", 4);
 		if (ops)
+		{
+			write(1, "rra\n", 4);
 			ops->rra++;
+		}
 		return (1);
 	}
 	return (0);
@@ -44,9 +46,11 @@ int	rrb(t_stack *b, t_ops_count *ops)
 {
 	if (reverse_rotate(b))
 	{
-		write(1, "rrb\n", 4);
 		if (ops)
+		{
+			write(1, "rrb\n", 4);
 			ops->rrb++;
+		}
 		return (1);
 	}
 	return (0);
@@ -63,9 +67,11 @@ int	rrr(t_stack *a, t_stack *b, t_ops_count *ops)
 		did += reverse_rotate(b);
 	if (did)
 	{
-		write(1, "rrr\n", 4);
 		if (ops)
+		{
+			write(1, "rrr\n", 4);
 			ops->rrr++;
+		}
 		return (1);
 	}
 	return (0);

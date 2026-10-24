@@ -6,7 +6,7 @@
 #    By: sasilves <sasilves@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/06 18:00:25 by sasilves          #+#    #+#              #
-#    Updated: 2026/07/10 12:40:01 by sasilves         ###   ########.fr        #
+#    Updated: 2026/06/06 18:00:32 by sasilves         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ SRCS = ft_isalpha.c \
        ft_memcmp.c \
        ft_strnstr.c \
        ft_atoi.c \
-	   ft_atol.c \
+       ft_atol.c \
        ft_calloc.c \
        ft_strdup.c \
        ft_substr.c \
@@ -69,7 +69,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(AR) $(NAME) $(OBJS)
 
-%.o: %.c
+%.o: %.c libft.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
@@ -78,6 +78,7 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
-re: fclean all
+re: fclean
+	$(MAKE) all
 
 .PHONY: all clean fclean re

@@ -16,6 +16,8 @@
 # include "bench.h"
 # include "stack.h"
 
+/* A NULL ops pointer executes silently; otherwise print and count moves. */
+
 int	sa(t_stack *a, t_ops_count *ops);
 int	sb(t_stack *b, t_ops_count *ops);
 int	ss(t_stack *a, t_stack *b, t_ops_count *ops);

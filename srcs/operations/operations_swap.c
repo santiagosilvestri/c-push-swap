@@ -39,9 +39,11 @@ int	sa(t_stack *a, t_ops_count *ops)
 {
 	if (swap(a))
 	{
-		write(1, "sa\n", 3);
 		if (ops)
+		{
+			write(1, "sa\n", 3);
 			ops->sa++;
+		}
 		return (1);
 	}
 	return (0);
@@ -51,9 +53,11 @@ int	sb(t_stack *b, t_ops_count *ops)
 {
 	if (swap(b))
 	{
-		write(1, "sb\n", 3);
 		if (ops)
+		{
+			write(1, "sb\n", 3);
 			ops->sb++;
+		}
 		return (1);
 	}
 	return (0);
@@ -70,9 +74,11 @@ int	ss(t_stack *a, t_stack *b, t_ops_count *ops)
 		did += swap(b);
 	if (did)
 	{
-		write(1, "ss\n", 3);
 		if (ops)
+		{
+			write(1, "ss\n", 3);
 			ops->ss++;
+		}
 		return (1);
 	}
 	return (0);

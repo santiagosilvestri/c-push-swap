@@ -23,6 +23,7 @@
 # include "operations.h"
 # include "algorithms.h"
 
+# define FLAG_NONE		0
 # define FLAG_SIMPLE	1
 # define FLAG_MEDIUM	2
 # define FLAG_COMPLEX	3

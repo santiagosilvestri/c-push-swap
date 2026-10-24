@@ -14,10 +14,13 @@
 
 static int	is_valid_int(char *str)
 {
-	long	num;
-	int		i;
+	unsigned long	num;
+	unsigned long	limit;
+	int				i;
 
 	i = 0;
+	num = 0;
+	limit = (unsigned long)INT_MAX + (str[0] == '-');
 	if (str[i] == '-' || str[i] == '+')
 		i++;
 	if (!str[i])
@@ -26,11 +29,11 @@ static int	is_valid_int(char *str)
 	{
 		if (str[i] < '0' || str[i] > '9')
 			return (0);
+		if (num > (limit - (str[i] - '0')) / 10)
+			return (0);
+		num = num * 10 + (str[i] - '0');
 		i++;
 	}
-	num = ft_atol(str);
-	if (num > 2147483647 || num < -2147483648)
-		return (0);
 	return (1);
 }
 

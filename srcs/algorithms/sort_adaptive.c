@@ -22,12 +22,12 @@ int	sort_adaptive(t_stack *a, t_stack *b, t_bench *bench)
 {
 	if (!a || !b || !bench)
 		return (0);
-	if (bench->disorder < ADAPTIVE_SIMPLE_LIMIT)
+	if (bench->disorder < 20.0)
 	{
 		set_strategy(bench, "adaptive-simple", "O(n^2)");
 		return (sort_simple(a, b, &bench->ops));
 	}
-	if (bench->disorder < ADAPTIVE_MEDIUM_LIMIT)
+	if (bench->disorder < 50.0)
 	{
 		set_strategy(bench, "adaptive-medium", "O(n*sqrt(n))");
 		return (sort_medium(a, b, &bench->ops));

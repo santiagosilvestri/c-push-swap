@@ -11,28 +11,47 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <limits.h>
+
+static long	parse_digits(const char *str, int sign)
+{
+	long	result;
+	long	limit;
+	int		digit;
+
+	result = 0;
+	limit = -LONG_MAX;
+	if (sign < 0)
+		limit = LONG_MIN;
+	while (*str >= '0' && *str <= '9')
+	{
+		digit = *str - '0';
+		if (result < (limit + digit) / 10)
+		{
+			if (sign < 0)
+				return (LONG_MIN);
+			return (LONG_MAX);
+		}
+		result = result * 10 - digit;
+		str++;
+	}
+	if (sign < 0)
+		return (result);
+	return (-result);
+}
 
 long	ft_atol(const char *str)
 {
-	long	result;
-	int		sign;
-	int		i;
+	int	sign;
 
-	i = 0;
+	while (*str == ' ' || (*str >= 9 && *str <= 13))
+		str++;
 	sign = 1;
-	result = 0;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	if (*str == '-' || *str == '+')
 	{
-		if (str[i] == '-')
+		if (*str == '-')
 			sign = -1;
-		i++;
+		str++;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		result = result * 10 + (str[i] - '0');
-		i++;
-	}
-	return (result * sign);
+	return (parse_digits(str, sign));
 }

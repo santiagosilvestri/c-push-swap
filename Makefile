@@ -1,69 +1,76 @@
 NAME		= push_swap
-BENCHMARK	= ps_benchmark
+BONUS		= checker
 
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror
 INCLUDES	= -I includes -I libft
+DEPFLAGS	= -MMD -MP
 
 LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
-SRCS		= srcs/main/main.c \
-			  srcs/main/main_utils.c \
-			  srcs/parsing/parsing.c \
+SHARED_SRCS	= srcs/parsing/parsing.c \
 			  srcs/parsing/parsing_utils.c \
 			  srcs/utils/stack/stack.c \
 			  srcs/utils/stack/stack_index.c \
-			  srcs/utils/disorder/disorder.c \
-			  srcs/utils/bench/bench.c \
 			  srcs/operations/operations_push.c \
 			  srcs/operations/operations_rotate.c \
 			  srcs/operations/operations_reverse_rotate.c \
 			  srcs/operations/operations_swap.c \
-			  srcs/algorithms/algorithm_utils.c \
+			  srcs/algorithms/algorithm_utils.c
+
+SRCS		= srcs/main/main.c \
+			  srcs/main/main_utils.c \
+			  $(SHARED_SRCS) \
+			  srcs/utils/disorder/disorder.c \
+			  srcs/utils/bench/bench.c \
 			  srcs/algorithms/algorithm_position.c \
 			  srcs/algorithms/sort_simple.c \
 			  srcs/algorithms/sort_medium.c \
 			  srcs/algorithms/sort_complex.c \
 			  srcs/algorithms/sort_adaptive.c
 
-BENCH_SRCS	= tools/benchmark/benchmark.c \
-			  tools/benchmark/benchmark_args.c \
-			  tools/benchmark/benchmark_exec.c \
-			  tools/benchmark/benchmark_progress.c \
-			  tools/benchmark/benchmark_terminal.c \
-			  tools/benchmark/benchmark_utils.c \
-			  tools/benchmark/benchmark_verify.c
+BONUS_SRCS	= srcs/main/checker_bonus.c \
+			  srcs/main/checker_utils_bonus.c \
+			  $(SHARED_SRCS)
 
 OBJS		= $(SRCS:.c=.o)
-BENCH_OBJS	= $(BENCH_SRCS:.c=.o)
+BONUS_OBJS	= $(BONUS_SRCS:.c=.o)
+DEPS		= $(sort $(OBJS:.o=.d) $(BONUS_OBJS:.o=.d))
 
 all: $(NAME)
 
-benchmark: $(NAME) $(BENCHMARK)
+bonus: $(BONUS)
 
-$(LIBFT):
+$(LIBFT): FORCE
 	$(MAKE) -C $(LIBFT_DIR)
 
-$(NAME): $(LIBFT) $(OBJS)
+$(NAME): $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
-$(BENCHMARK): $(BENCH_OBJS)
-	$(CC) $(CFLAGS) $(BENCH_OBJS) -lm -o $(BENCHMARK)
+$(BONUS): $(BONUS_OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT) -o $(BONUS)
+
+$(OBJS) $(BONUS_OBJS): | $(LIBFT)
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) $(CFLAGS) $(DEPFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	$(MAKE) -C $(LIBFT_DIR) clean
-	rm -f $(OBJS) $(BENCH_OBJS)
+	rm -f $(OBJS)
+	rm -f $(BONUS_OBJS)
+	rm -f $(DEPS)
 
 fclean: clean
 	$(MAKE) -C $(LIBFT_DIR) fclean
-	rm -f $(NAME) $(BENCHMARK)
+	rm -f $(NAME) $(BONUS)
 
-re: fclean all
+re: fclean
+	$(MAKE) all
 
-rebenchmark: fclean benchmark
+FORCE:
 
-.PHONY: all benchmark clean fclean re rebenchmark
+-include $(DEPS)
+
+.PHONY: all bonus clean fclean re FORCE

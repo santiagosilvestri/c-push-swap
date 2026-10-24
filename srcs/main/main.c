@@ -76,9 +76,7 @@ int	main(int argc, char **argv)
 		return (0);
 	a = init_stacks(argc, argv, arg_start, &b);
 	bench.ops = (t_ops_count){0};
-	bench.disorder = 0.0;
-	if (strategy == FLAG_ADAPTIVE || bench.enabled)
-		bench.disorder = compute_disorder(a);
+	bench.disorder = compute_disorder(a);
 	run_sort(a, b, strategy, &bench);
 	if (bench.enabled)
 		print_bench(&bench);

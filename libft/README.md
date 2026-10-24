@@ -67,11 +67,21 @@ make fclean # Removes object files and libft.a
 make re     # Rebuilds the library from scratch
 ```
 
-If bonus functions are included, they can be compiled with:
+---
 
-```bash
-make bonus
+## Project Extensions
+
+This version retains the original Libft API and adds:
+
+```c
+long ft_atol(const char *str);
 ```
+
+`ft_atol` converts a decimal prefix to `long`, accepting leading ASCII whitespace and an optional sign. It stops at the first non-digit. When the magnitude exceeds the range of `long`, it returns `LONG_MIN` or `LONG_MAX`, according to the sign, without signed overflow. No numeric prefix produces zero. The input must point to a valid, null-terminated string.
+
+It does not report whether an entire string is a valid number. Applications must validate the format and their required numeric range separately. Push_swap performs that validation before calling it.
+
+The extension is declared in `libft.h` and built into `libft.a` by the existing Makefile. Linked-list functions are included in the default build.
 
 ---
 
@@ -342,10 +352,4 @@ All source code must be written, reviewed, tested, and understood by the student
 
 ## Author
 
-Created by:
-
-```bash
-sasilves
-```
-
-42 Madrid.
+**Santiago Silvestri** - `sasilves`

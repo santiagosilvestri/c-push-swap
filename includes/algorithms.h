@@ -16,9 +16,6 @@
 # include "stack.h"
 # include "bench.h"
 
-# define ADAPTIVE_SIMPLE_LIMIT 20.0
-# define ADAPTIVE_MEDIUM_LIMIT 50.0
-
 int	is_sorted(t_stack *stack);
 
 int	move_min_to_top_a(t_stack *a, t_ops_count *ops);
